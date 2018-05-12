@@ -1,0 +1,167 @@
+<html>
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <title>COMPSCI105 Assignment 1 Q2</title>
+</head>
+<body>
+    <p><strong><em>Q2. HTML TAG CHECKER</em></strong></p>
+    <p></p>
+    <p>A <em>markup language</em> is a language that annotates text so that the
+    computer can manipulate the text. Most markup languages are human readable
+    because the annotations are written in a way to distinguish them from the
+    text. The most important feature of a markup language is that the
+    <em>tags</em> it uses to indicate annotations should be easy to distinguish
+    from the document <em>content</em>.</p>
+    <p>One of the most well-known markup languages is the one commonly used to
+    create web pages, called <strong>HTML</strong>, or "Hypertext Markup
+    Language". In HTML, tags appear in "angle brackets" such as in
+    "&lt;html&gt;". When you load a Web page in your browser, you do not see
+    the tags themselves: the browser interprets the tags as instructions on how
+    to format the text for display.</p>
+    <p>Most tags in HTML are used in pairs to indicate where an effect starts
+    and ends. For example:</p>
+    <p>&lt;p&gt;<br>
+    this is a paragraph of text written in HTML<br>
+    &lt;/p&gt;</p>
+    <p>Here &lt;p&gt; represents the start of a paragraph, and &lt;/p&gt;
+    indicates where that paragraph ends.</p>
+    <p>Other tags include &lt;b&gt; and &lt;/b&gt; that are used to place the
+    enclosed text in <strong>bold</strong> font, and &lt;i&gt; and &lt;/i&gt;
+    indicate that the enclosed text is <em>italic</em>.</p>
+    <p>Note that "end" tags look just like the "start" tags, except for the
+    addition of a backslash &lsquo;/&rsquo;after the &lt; symbol.</p>
+    <p>Sets of tags are often nested inside other sets of tags. For example, an
+    <em>ordered list</em> is a list of numbered bullets. You specify the start
+    of an ordered list with the tag &lt;ol&gt;, and the end with &lt;/ol&gt;.
+    Within the ordered list, you identify items to be numbered with the tags
+    &lt;li&gt; (for "list item") and &lt;/li&gt;. For example, the following
+    specification:</p>
+    <p>&lt;ol&gt;</p>
+    <p>&lt;li&gt;First item&lt;/li&gt;</p>
+    <p>&lt;li&gt;Second item&lt;/li&gt;</p>
+    <p>&lt;li&gt;Third item&lt;/li&gt;</p>
+    <p>&lt;/ol&gt;</p>
+    <p>would result in the following:</p>
+    <ol>
+        <li>First item</li>
+        <li>Second item</li>
+        <li>Third item</li>
+    </ol>
+    <p>Notice how you start the ordered list with the &lt;ol&gt; tag, specify
+    three line items with matching &lt;li&gt; and &lt;/li&gt; tags, and the
+    close the ordered list with the &lt;/ol&gt; tag.</p>
+    <p>You may have noticed that the pattern of using matching tags strongly
+    resembles the pattern of matching parentheses that we discussed in class:
+    when you use parentheses, brackets, and braces, they have to match in
+    reverse order, such as "{[()]}". A pattern such as "[(])" would be
+    incorrect since the right bracket does not match the left parenthesis.
+    Similarly, an HTML pattern such as
+    &lt;ol&gt;&lt;li&gt;&lt;/ol&gt;&lt;/li&gt; would be incorrect since the
+    closing tags are in the wrong order.</p>
+    <p><strong>The aim of this question</strong> <strong>is to write an "HTML
+    Checker" program that takes as input an HTML file, and produces a report
+    indicating whether or not the tags are correctly matched.</strong></p>
+    <p>Just as the parenthesis checker uses a stack to store symbols waiting
+    for a match to be found, your program should also use a stack. You should
+    include the implementation of the Stack ADT discussed in class.</p>
+    <p></p>
+    <p><strong>Input:</strong> As input for your program, the sample test files
+    can be download from the course website. You can open the test files with a
+    text editor i.e. Notepad++.</p>
+    <p></p>
+    <p></p>
+    <ul>
+        <li><strong>Processing the input file</strong></li>
+        <li>The first task your program must do is read in an HTML file and
+        extract the tags. A simple strategy for doing this would be to write a
+        function "getTags" that:
+            <ul>
+                <li>reads one character at a time from the data file, throwing
+                everything away until it gets to a "&lt;". (Discard the "&lt;"
+                as well.)</li>
+                <li>reads one character at a time, appending it to a string,
+                until it gets to a "&gt;" or whitespace. (Discard the "&gt;" as
+                well.)</li>
+                <li>append the tag to a list.</li>
+                <li>returns tags found.</li>
+            </ul>
+        </li>
+        <li>Make sure you account for end-of-file conditions in getTags. If
+        you've done everything correctly, you now have a list of tags, both
+        start and end tags, once the getTags function is invoked.</li>
+    </ul>
+    <ul>
+        <li><strong>HTML Tag Checker</strong></li>
+        <li>Write a function called &ldquo;checkTags&rdquo; that iterates
+        through your list of tags, looking for matches.
+            <ul>
+                <li>If there is a mismatch of beginning and ending tags, print
+                an error message and terminate.</li>
+                <li>After processing the list of tags and there is no mismatch,
+                print a confirmation message.</li>
+                <li>At the end of the list, there are remaining tags on the
+                stack, print a confirmation message and the remaining tags in
+                the stack.</li>
+            </ul>
+        </li>
+        <li>In addition, have your program build a list called "VALIDTAGS". As
+        you iterate through your list of tags, check to see if the tag appears
+        in VALIDTAGS. If it doesn't, add it to VALIDTAGS and print a
+        confirmation message (see output section below).</li>
+    </ul>
+    <p><strong>Output</strong></p>
+    <p>The output of your program should include the following:</p>
+    <ul>
+        <li>A printout of your list of tags (the result of getTags).</li>
+        <li>One line for each tag as you process it, explaining the action and
+        showing the current contents of the stack. You may have to modify your
+        ADT to allow for the information to be displayed properly. Some
+        examples are:</li>
+    </ul>
+    <p>Tag b pushed: stack is now [html, body, b]</p>
+    <p>Tag /b matches top of stack: stack is now [html, body]</p>
+    <p>Tag ul pushed: stack is now [html, body, ul]</p>
+    <ul>
+        <li>A message every time you add a tag to VALIDTAGS. For example:</li>
+    </ul>
+    <p>New tag XXX found and added to list of valid tags</p>
+    <p>Your program should end with either:</p>
+    <p>Error: tag is XXX but top of stack is YYY</p>
+    <p>or</p>
+    <p>Error: tag is XXX but stack is empty.</p>
+    <p>or</p>
+    <p>Processing complete. No mismatches found.</p>
+    <p>or</p>
+    <p>Processing complete. Unmatched tags remain on stack: [XXX, YYY, ZZZ]</p>
+    <p>followed by labelled and sorted printouts of VALIDTAGS and EXCEPTIONS
+    (see below).</p>
+    <ul>
+        <li><strong>The Twist</strong></li>
+    </ul>
+    <p>There are some tags that do not need matching start and end tags! One
+    example is &lt;br /&gt;. This tag is used to indicate a line break at the
+    current location. Another is &lt;meta&gt;, which is used to provide special
+    information ("metadata") about a Web page, and one more (left for you to
+    identify in your data files).</p>
+    <p>This means that if you followed the instructions above correctly, your
+    HTML checker will notice that there are three tags that don't have a match.
+    Teach your program that this is okay for these three cases by maintaining a
+    list called EXCEPTIONS which you hard-code into your main program. They
+    will appear in your list of tags just as any other tags. However, when you
+    begin your iteration through the list and you encounter one of these, you
+    do not need to push it on the stack since you won't be waiting for a close
+    tag. Instead, just print an output line such as:</p>
+    <p>Tag br does not need to match: stack is still [html, body, b]</p>
+    <p>and continue.</p>
+    <hr>
+    <p><strong>SUMMARY OF SUBMISSION INSTRUCTIONS:</strong></p>
+    <p></p>
+    <p>You should submit the following file for question 2 of this assignment
+    through the web dropbox at (https://adb.auckland.ac.nz/).</p>
+    <ul>
+        <li>py the main program, where &ldquo;abcd001&rdquo; should be replaced
+        by your UPI.</li>
+        <li>All other code that is needed to run the program.</li>
+    </ul>
+</body>
+</html>

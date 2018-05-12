@@ -1,0 +1,69 @@
+1.For the first question, I searched the relative knowledge about the maximum likelihood estimate of mean of that distribution, and the variance. Also, I searched the relative knowledge about the log probability of a value from that Gaussian distribution.
+For the second question, I read about some blogs of the bigram language model with add one (Laplace) smoothing. And I split the whole file into some little functions and test them individually.
+
+
+2.Colorado's congression districts look more like the congressional districts of states that Obama won or that Romeny won.
+Here is the run result:
+		Obama		Romney
+================================================================================
+District 4	-4.169783	-4.162351
+District 5	-4.601582	-4.672459
+District 6	-4.196546	-4.183077
+District 7	-4.888718	-4.941554
+District 1	-4.268798	-4.239718
+District 2	-4.781377	-4.841300
+District 3	-4.186122	-4.174986
+[Finished in 0.4s]
+We can see from the result that in District 2,5,7 Obama would won, while in District 1,3,4,6 Romney would won.
+
+3.The code is here for the histogram picture
+
+	share_vote = republican_share(lines, kOBAMA)
+    new_dict = {}
+    count_dict = {}
+    for value in share_vote.keys():
+        if value[0] not in new_dict:
+            new_dict[value[0]] = share_vote[value]
+            count_dict[value[0]] = 1
+        else:
+            new_dict[value[0]] = new_dict[value[0]] * count_dict[value[0]] + share_vote[value]
+            count_dict[value[0]] += 1 
+            new_dict[value[0]] /= count_dict[value[0]]
+
+    share_vote_r = republican_share(lines, kROMNEY)
+    new_dict_r = {}
+    count_dict_r = {}
+    for value in share_vote_r.keys():
+        if value[0] not in new_dict_r:
+            new_dict_r[value[0]] = share_vote_r[value]
+            count_dict_r[value[0]] = 1
+        else:
+            new_dict_r[value[0]] = new_dict_r[value[0]] * count_dict_r[value[0]] + share_vote_r[value]
+            count_dict_r[value[0]] += 1 
+            new_dict_r[value[0]] /= count_dict_r[value[0]]
+    
+    x = []
+    y = []
+    x_r = []
+    y_r = []
+    count = 0
+    for k, v in new_dict.items():
+        x.append(count)
+        y.append(v)
+        count += 2
+
+    count_r = 1 
+    plt.bar(x,y,0.8)
+    for k, v in new_dict_r.items():
+        x_r.append(count_r)
+        y_r.append(v)
+        count_r += 2
+    plt.bar(x,y,color="blue")
+    plt.bar(x_r,y_r,color="red")
+    plt.show()
+
+4.Obama would say "dogmas", which no previous president said
+
+5.Obama would say "plotting an", which no previous president said
+
+6.A random sentence from a Republican and a Democrat are both "We must be the world"
